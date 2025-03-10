@@ -219,7 +219,25 @@ export const getCippFormatting = (data, cellName, type, canReceive) => {
     }
   }
 
-  if (cellName === "ClientId") {
+  if (cellName === "PostExecution") {
+    const values = data ? data?.split(",").map((item) => item.trim()) : [];
+    if (values.length > 0) {
+      return isText
+        ? data
+        : values.map((value, index) => (
+            <Chip
+              key={index}
+              size="small"
+              variant="outlined"
+              label={value}
+              color="info"
+              sx={{ mr: 0.5 }}
+            />
+          ));
+    }
+  }
+
+  if (cellName === "ClientId" || cellName === "role") {
     return isText ? data : <CippCopyToClipBoard text={data} type="chip" />;
   }
 
@@ -268,6 +286,19 @@ export const getCippFormatting = (data, cellName, type, canReceive) => {
         ? "Report Only"
         : data;
     return isText ? data : <Chip variant="outlined" label={data} size="small" color="info" />;
+  }
+
+  if (cellName === "Parameters.ScheduledBackupValues") {
+    return isText ? (
+      JSON.stringify(data)
+    ) : (
+      <CippDataTableButton
+        data={Object.keys(data).map((key) => {
+          return { key, value: data[key] };
+        })}
+        tableTitle={getCippTranslation(cellName)}
+      />
+    );
   }
 
   // Handle null or undefined data
@@ -439,9 +470,7 @@ export const getCippFormatting = (data, cellName, type, canReceive) => {
           variant="outlined"
           label={data}
           size="small"
-          color={
-            data === "private" ? "error" :data === "public" ? "success" : "primary"
-          }
+          color={data === "private" ? "error" : data === "public" ? "success" : "primary"}
           sx={{ textTransform: "capitalize" }}
         />
       );
