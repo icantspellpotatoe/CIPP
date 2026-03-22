@@ -1,15 +1,35 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# editor, github and lint
-.github/
-.vscode/
-.idea/
-.husky/
-.eslintcache
-# node packages
+# dependencies
 node_modules
-# Ignore all files in .github and .vscode directories.
-.github/
-.vscode/
-# Except pre-approved CI/CD files.
-!.github/workflows/Version_Check.yml
-!.github/workflows/Docs.yml
+.pnp
+.pnp.js
+build
+package-lock.json
+# testing
+coverage
+
+# production
+.next
+out
+
+# misc
+.DS_Store
+.eslintcache
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# vscode debug logs
+debug.log
+app.log
+
+# AI rules
+.*/rules
+AGENTS.md
